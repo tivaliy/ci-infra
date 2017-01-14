@@ -1,0 +1,63 @@
+version: '2'
+networks:
+  ci-network:
+services:
+  db-gerrit:
+    image: mysql:latest
+    networks:
+      - ci-network
+    volumes:
+      - ${VOLUME_PATH}/mysql_volume:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 1qaz
+      MYSQL_DATABASE: reviewdb
+      MYSQL_USER: gerrit
+      MYSQL_PASSWORD: gerrit_pass
+    command: mysqld --sql_mode="ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
+  gerrit:
+    image: openfrontier/gerrit
+    links:
+      - db-gerrit:mysql
+    networks:
+      - ci-network
+    ports:
+      - 8080:8080
+      - 29418:29418
+    volumes:
+      - ${VOLUME_PATH}/gerrit_volume:/var/gerrit/review_site
+    restart: unless-stopped
+    environment:
+      WEBURL: http://${PROXY_HOST}/gerrit
+      HTTPD_LISTENURL: proxy-http://*:8080/gerrit
+      DATABASE_TYPE: mysql
+      DB_PORT_3306_TCP_ADDR: db-gerrit
+      DB_PORT_3306_TCP_PORT: 3306
+      DB_ENV_MYSQL_DB: reviewdb
+      DB_ENV_MYSQL_USER: gerrit
+      DB_ENV_MYSQL_PASSWORD: gerrit_pass
+      AUTH_TYPE: ${AUTH_TYPE}
+      OAUTH_ALLOW_EDIT_FULL_NAME: ${OAUTH_ALLOW_EDIT_FULL_NAME}
+      OAUTH_ALLOW_REGISTER_NEW_EMAIL: ${OAUTH_ALLOW_REGISTER_NEW_EMAIL} 
+      OAUTH_GOOGLE_RESTRICT_DOMAIN: ${OAUTH_GOOGLE_RESTRICT_DOMAIN}
+      OAUTH_GOOGLE_CLIENT_ID: ${OAUTH_GOOGLE_CLIENT_ID}
+      OAUTH_GOOGLE_CLIENT_SECRET: ${OAUTH_GOOGLE_CLIENT_SECRET}
+      OAUTH_GOOGLE_LINK_OPENID: ${OAUTH_GOOGLE_LINK_OPENID}
+      OAUTH_GITHUB_CLIENT_ID: ${OAUTH_GITHUB_CLIENT_ID}
+      OAUTH_GITHUB_CLIENT_SECRET: ${OAUTH_GITHUB_CLIENT_SECRET}
+    depends_on:
+      - db-gerrit
+
+  proxy:
+    build: ./nginx/
+    image: nginx-proxy
+    networks:
+      - ci-network
+    ports:
+      - 80:80
+    environment:
+      SERVER_NAME: ${PROXY_HOST}
+      CLIENT_MAX_BODY_SIZE: 200m
+    depends_on:
+     - gerrit
