@@ -23,7 +23,7 @@ services:
     networks:
       - ci-network
     ports:
-      - 8080:8080
+      - 8080
       - 29418:29418
     volumes:
       - ${VOLUME_PATH}/gerrit_volume:/var/gerrit/review_site
@@ -49,6 +49,19 @@ services:
     depends_on:
       - db-gerrit
 
+  jenkins:
+    image: jenkins:latest
+    networks:
+     - ci-network
+    ports:
+     - 8080
+     - 50000:50000
+    volumes:
+      - ${VOLUME_PATH}/jenkins_volume:/var/jenkins_home
+    restart: unless-stopped
+    environment:
+      JENKINS_OPTS: --prefix=/jenkins
+
   proxy:
     build: ./nginx/
     image: nginx-proxy
@@ -61,3 +74,4 @@ services:
       CLIENT_MAX_BODY_SIZE: 200m
     depends_on:
      - gerrit
+     - jenkins

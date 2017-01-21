@@ -1,5 +1,4 @@
 FROM nginx:stable-alpine
-
 MAINTAINER Vitalii Kulanov "vitaliy@kulanov.org.ua"
 
 RUN set -x \
@@ -12,4 +11,3 @@ RUN chmod +x /usr/local/bin/nginx-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/nginx-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
-

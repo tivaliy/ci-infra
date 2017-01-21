@@ -13,7 +13,7 @@ if [ "$1" = "nginx" ]; then
   echo "============================"
 
   SLEEP_TIME=5
-  declare -a DEPENDENCIES=( "gerrit:8080/gerrit" )
+  declare -a DEPENDENCIES=( "gerrit:8080/gerrit" "jenkins:8080/jenkins" )
   for d in ${DEPENDENCIES[@]}; do 
     echo "waiting for $d to be available";
     # Start NGINX only when all dependencies are available.
