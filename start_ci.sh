@@ -8,4 +8,4 @@ source ./env.config
 sudo mkdir -p ${VOLUME_PATH}/jenkins_volume
 sudo chown 1000 ${VOLUME_PATH}/jenkins_volume
 
-docker-compose ${COMPOSE_OPT} $@
+docker-compose $@

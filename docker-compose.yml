@@ -46,11 +46,15 @@ services:
       OAUTH_GOOGLE_LINK_OPENID: ${OAUTH_GOOGLE_LINK_OPENID}
       OAUTH_GITHUB_CLIENT_ID: ${OAUTH_GITHUB_CLIENT_ID}
       OAUTH_GITHUB_CLIENT_SECRET: ${OAUTH_GITHUB_CLIENT_SECRET}
+      GERRIT_INIT_ARGS: --install-plugin=download-commands
+                        --install-plugin=singleusergroup
+                        --install-plugin=commit-message-length-validator
     depends_on:
       - db-gerrit
 
   jenkins:
-    image: jenkins:latest
+    build: ./jenkins/
+    image: tivalii/jenkins
     networks:
      - ci-network
     ports:
