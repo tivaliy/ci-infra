@@ -1,11 +1,10 @@
 version: '2'
-networks:
-  ci-network:
 services:
   db-gerrit:
+    container_name: ci-infra-db
     image: mysql:latest
     networks:
-      - ci-network
+      - ci-infra-net
     volumes:
       - ${VOLUME_PATH}/mysql_volume:/var/lib/mysql
     restart: unless-stopped
@@ -17,14 +16,14 @@ services:
     command: mysqld --sql_mode="ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
   gerrit:
+    container_name: ci-infra-gerrit
     image: openfrontier/gerrit
+    networks:
+      - ci-infra-net
     links:
       - db-gerrit:mysql
-    networks:
-      - ci-network
     ports:
-      - 8080
-      - 29418:29418
+      - "29418:29418"
     volumes:
       - ${VOLUME_PATH}/gerrit_volume:/var/gerrit/review_site
     restart: unless-stopped
@@ -39,7 +38,7 @@ services:
       DB_ENV_MYSQL_PASSWORD: gerrit_pass
       AUTH_TYPE: ${AUTH_TYPE}
       OAUTH_ALLOW_EDIT_FULL_NAME: ${OAUTH_ALLOW_EDIT_FULL_NAME}
-      OAUTH_ALLOW_REGISTER_NEW_EMAIL: ${OAUTH_ALLOW_REGISTER_NEW_EMAIL} 
+      OAUTH_ALLOW_REGISTER_NEW_EMAIL: ${OAUTH_ALLOW_REGISTER_NEW_EMAIL}
       OAUTH_GOOGLE_RESTRICT_DOMAIN: ${OAUTH_GOOGLE_RESTRICT_DOMAIN}
       OAUTH_GOOGLE_CLIENT_ID: ${OAUTH_GOOGLE_CLIENT_ID}
       OAUTH_GOOGLE_CLIENT_SECRET: ${OAUTH_GOOGLE_CLIENT_SECRET}
@@ -53,13 +52,11 @@ services:
       - db-gerrit
 
   jenkins:
+    container_name: ci-infra-jenkins
     build: ./jenkins/
     image: tivalii/jenkins
     networks:
-     - ci-network
-    ports:
-     - 8080
-     - 50000:50000
+      - ci-infra-net
     volumes:
       - ${VOLUME_PATH}/jenkins_volume:/var/jenkins_home
     restart: unless-stopped
@@ -67,15 +64,27 @@ services:
       JENKINS_OPTS: --prefix=/jenkins
 
   proxy:
+    container_name: ci-infra-proxy
     build: ./nginx/
     image: nginx-proxy
     networks:
-      - ci-network
+      - ci-infra-net
     ports:
-      - 80:80
+      - "80:80"
     environment:
       SERVER_NAME: ${PROXY_HOST}
       CLIENT_MAX_BODY_SIZE: 200m
     depends_on:
      - gerrit
      - jenkins
+
+networks:
+  ci-infra-net:
+    driver: bridge
+    driver_opts:
+      "com.docker.network.bridge.name": "ci-infra-net"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.0.0/24
+        gateway: 172.18.0.1
