@@ -24,13 +24,28 @@ used docker containers
 Quick start
 ===========
 1. Set required variables in the ``env.config`` file
-2. Run ``./start_ci.sh up -d``
-3. Access ``http://PROXY_HOST`` in your browser:
+2. Ensure, that newly created network doesn't overlap with already existing ones
+   in your system (see docker-compose.yml):
+
+      networks:
+      ci-infra-net:
+        driver: bridge
+        driver_opts:
+          "com.docker.network.bridge.name": "ci-infra-net"
+        ipam:
+          driver: default
+          config:
+          - subnet: 172.18.0.0/24
+            gateway: 172.18.0.1
+
+3. Run ``./start_ci.sh up -d``
+4. Access ``http://PROXY_HOST`` in your browser:
 
     * Access Gerrit -- ``http://PROXY_HOST/gerrit``
     * Access Jenkins -- ``http://PROXY_HOST/jenkins``
-4. Stop and remove all containers and networks ``./destroy_ci.sh``
-5. (Optionally) Remove ``VOLUME_PATH`` directory ``sudo rm -rf /your/volume/path``
+
+5. Stop and remove all containers and networks ``./destroy_ci.sh``
+6. (Optionally) Remove ``VOLUME_PATH`` directory ``sudo rm -rf /your/volume/path``
 
 *NOTE: Currently there is no any integration between Gerrit and Jenkins yet.
 The process of their configuration should be performed manually.*

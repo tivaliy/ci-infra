@@ -4,7 +4,7 @@ set -e
 
 source ./env.config
 
-# Stops containers and removes containers, networks and volumes
+# Stop and remove containers
 docker-compose down
 
 # Remove docker data volumes if '-f/--force' flag specified
