@@ -25,7 +25,9 @@ Quick start
 ===========
 1. Set required variables in the ``env.config`` file
 2. Ensure, that newly created network doesn't overlap with already existing ones
-   in your system (see docker-compose.yml):
+   in your system (see ``docker-compose.yml``):
+
+.. code-block:: yaml
 
       networks:
       ci-infra-net:
