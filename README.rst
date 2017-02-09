@@ -24,8 +24,8 @@ used docker containers
 Quick start
 ===========
 1. Set required variables in the ``env.config`` file
-2. Ensure network doesn't overlap with already existing ones in your system.
-   Please update ip address if required:
+2. Ensure, that newly created network doesn't overlap with already existing ones
+   in your system (see docker-compose.yml):
 
       networks:
       ci-infra-net:
