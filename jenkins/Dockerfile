@@ -5,7 +5,7 @@ MAINTAINER Vitalii Kulanov "vitaliy@kulanov.org.ua"
 RUN /usr/local/bin/install-plugins.sh \
     gerrit-trigger \
     git \
-    swarm \
+    swarm
 
 # Generate jenkins ssh key
 COPY gen-ssh-key.sh /usr/local/bin/gen-ssh-key.sh
