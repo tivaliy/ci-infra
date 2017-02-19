@@ -71,6 +71,8 @@ services:
       - ci-infra-net
     ports:
       - "80:80"
+    volumes:
+      - ${VOLUME_PATH}/nginx/html:/usr/share/nginx/html:ro
     environment:
       SERVER_NAME: ${PROXY_HOST}
       CLIENT_MAX_BODY_SIZE: 200m

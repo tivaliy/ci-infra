@@ -41,13 +41,17 @@ Quick start
             gateway: 172.18.0.1
 
 3. Run ``./start_ci.sh up -d``
-4. Access ``http://PROXY_HOST`` in your browser:
+4. Put WWW content of your ``http://PROXY_HOST`` site to ``/your/volume/path/nginx/html`` (defaults to ``/srv/ci-infra/nginx/html``)
+5. Access ``http://PROXY_HOST`` in your browser:
 
-    * Access Gerrit -- ``http://PROXY_HOST/gerrit``
-    * Access Jenkins -- ``http://PROXY_HOST/jenkins``
+* Access Gerrit -- ``http://PROXY_HOST/gerrit``
+* Access Jenkins -- ``http://PROXY_HOST/jenkins``
 
-5. Stop and remove all containers and networks ``./destroy_ci.sh``
-6. (Optionally) Remove ``VOLUME_PATH`` directory ``sudo rm -rf /your/volume/path``
+6. Stop and remove all containers and networks ``./destroy_ci.sh``
+7. (Optionally) Remove ``VOLUME_PATH`` directory ``sudo rm -rf /your/volume/path`` (defaults to ``/srv/ci-infra``)
 
-*NOTE: Currently there is no any integration between Gerrit and Jenkins yet.
-The process of their configuration should be performed manually.*
+=====
+Notes
+=====
+Currently there is no any integration between Gerrit and Jenkins.
+The process of their configuration should be performed manually.
