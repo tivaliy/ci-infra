@@ -53,7 +53,6 @@ services:
 
   jenkins:
     container_name: ci-infra-jenkins
-    build: ./jenkins/
     image: tivalii/jenkins
     networks:
       - ci-infra-net
