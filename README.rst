@@ -17,7 +17,7 @@ used docker containers
 
 * db-gerrit (`mysql:latest <https://hub.docker.com/_/mysql/>`_)
 * gerrit (`openfrontier/gerrit <https://hub.docker.com/r/openfrontier/gerrit/>`_)
-* jenkins (`jenkins:latest <https://hub.docker.com/r/_/jenkins/>`_)
+* jenkins (`tivalii/jenkins <https://hub.docker.com/r/tivalii/jenkins/>`_ based on `jenkins:latest <https://hub.docker.com/r/_/jenkins/>`_)
 * proxy (`nginx:stable-alpine <https://hub.docker.com/_/nginx/>`_)
 
 ===========
@@ -48,7 +48,7 @@ Quick start
 * Access Jenkins -- ``http://PROXY_HOST/jenkins``
 
 6. Stop and remove all containers and networks ``./destroy_ci.sh``
-7. (Optionally) Remove ``VOLUME_PATH`` directory ``sudo rm -rf /your/volume/path`` (defaults to ``/srv/ci-infra``)
+7. (Optionally) Remove ``VOLUME_PATH`` directory ``./destroy_ci.sh --force`` (defaults to ``/srv/ci-infra``)
 
 =====
 Notes
