@@ -64,8 +64,7 @@ services:
 
   proxy:
     container_name: ci-infra-proxy
-    build: ./nginx/
-    image: nginx-proxy
+    image: tivalii/nginx-proxy
     networks:
       - ci-infra-net
     ports:
