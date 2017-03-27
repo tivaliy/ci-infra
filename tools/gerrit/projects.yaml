@@ -1,0 +1,3 @@
+- project: example/project-example
+  description: Some project-example description
+  acl-config: acls/project-example/project-example.config
