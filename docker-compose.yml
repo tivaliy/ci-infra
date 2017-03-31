@@ -28,7 +28,7 @@ services:
       - ${VOLUME_PATH}/gerrit_volume:/var/gerrit/review_site
     restart: unless-stopped
     environment:
-      WEBURL: http://${PROXY_HOST}/gerrit
+      WEBURL: http://${WEB_SERVER_NAME}/gerrit
       HTTPD_LISTENURL: proxy-http://*:8080/gerrit
       DATABASE_TYPE: mysql
       DB_PORT_3306_TCP_ADDR: db-gerrit
@@ -72,7 +72,7 @@ services:
     volumes:
       - ${VOLUME_PATH}/nginx/html:/usr/share/nginx/html:ro
     environment:
-      SERVER_NAME: ${PROXY_HOST}
+      SERVER_NAME: ${WEB_SERVER_NAME}
       CLIENT_MAX_BODY_SIZE: 200m
     depends_on:
      - gerrit
