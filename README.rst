@@ -41,11 +41,11 @@ Quick start
             gateway: 172.18.0.1
 
 3. Run ``./start_ci.sh up -d``
-4. Put WWW content of your ``http://PROXY_HOST`` site to ``/your/volume/path/nginx/html`` (defaults to ``/srv/ci-infra/nginx/html``)
-5. Access ``http://PROXY_HOST`` in your browser:
+4. Put WWW content of your ``http://WEB_SERVER_NAME`` site to ``/your/volume/path/nginx/html`` (defaults to ``/srv/ci-infra/nginx/html``)
+5. Access ``http://WEB_SERVER_NAME`` in your browser:
 
-* Access Gerrit -- ``http://PROXY_HOST/gerrit``
-* Access Jenkins -- ``http://PROXY_HOST/jenkins``
+* Access Gerrit -- ``http://WEB_SERVER_NAME/gerrit``
+* Access Jenkins -- ``http://WEB_SERVER_NAME/jenkins``
 
 6. Stop and remove all containers and networks ``./destroy_ci.sh``
 7. (Optionally) Remove ``VOLUME_PATH`` directory ``./destroy_ci.sh --force`` (defaults to ``/srv/ci-infra``)
