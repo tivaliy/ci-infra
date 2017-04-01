@@ -1,0 +1,5 @@
+- defaults:
+    name: global
+    project-type: freestyle
+    gerrit-host: example.com
+    gerrit-port: '29418'

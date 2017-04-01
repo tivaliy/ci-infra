@@ -1,0 +1,27 @@
+- job-template:
+    name: hello-world
+    description: |
+      Hello-world greeting job for sandbox playground
+    concurrent: false
+    builders:
+      - shell: |
+         echo "Hello World from Jenkins!"
+    scm:
+      - git:
+         remotes:
+           - gerrit:
+               url: 'http://{gerrit-host}/gerrit/$GERRIT_PROJECT'
+               refspec: 'refs/changes/*:refs/changes/*'
+         branches:
+          - '$GERRIT_REFSPEC'
+    triggers:
+      - gerrit:
+          trigger-on:
+            - patchset-created-event
+          projects:
+            - project-compare-type: PLAIN
+              project-pattern: 'example/sandbox'
+              branches:
+                - branch-compare-type: ANT
+                  branch-pattern: '**'
+          custom-url: '* $JOB_NAME $BUILD_URL'

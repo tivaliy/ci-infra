@@ -28,5 +28,6 @@ rm -rf gerritlib
 echo "Creating projects in Gerrit"
 manage-projects -v -d
 
-echo "Cleaning..."
 rm -rf jeepyb_venv
+
+echo "...Completed..."
