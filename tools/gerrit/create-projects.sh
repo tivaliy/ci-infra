@@ -19,12 +19,6 @@ pip install -r jeepyb/requirements.txt
 pip install jeepyb/
 rm -rf jeepyb
 
-# This is temporary part that should be removed after release of gerritlib 0.6.1.
-# Update gerritlib manually to match the command for Gerrit-2.12+.
-git clone https://github.com/openstack-infra/gerritlib.git
-pip install gerritlib/
-rm -rf gerritlib
-
 echo "Creating projects in Gerrit"
 manage-projects -v -d
 
