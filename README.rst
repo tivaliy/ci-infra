@@ -18,7 +18,7 @@ used docker containers
 * db-gerrit (`mysql:latest <https://hub.docker.com/_/mysql/>`_)
 * gerrit (`openfrontier/gerrit <https://hub.docker.com/r/openfrontier/gerrit/>`_)
 * jenkins (`tivalii/jenkins <https://hub.docker.com/r/tivalii/jenkins/>`_ based on `jenkins:latest <https://hub.docker.com/r/_/jenkins/>`_)
-* proxy (`tivalii/nginx-proxy <https://hub.docker.com/r/tivalii/nginx-proxy/>`_ based on `nginx:stable-alpine <https://hub.docker.com/_/nginx/>`_ inspired by `openfrontier/nginx <https://github.com/openfrontier/docker-nginx>`_)
+* proxy (`nginx:1.12.2 <https://hub.docker.com/r/_/nginx/>`_)
 
 ===========
 Quick start

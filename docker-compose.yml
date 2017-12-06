@@ -78,7 +78,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./tools/nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
+      - ./nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ${VOLUME_PATH}/nginx/html:/usr/share/nginx/html:ro
       - ${VOLUME_PATH}/nginx/ssl:/etc/nginx/ssl:ro
     environment:
