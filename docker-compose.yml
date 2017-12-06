@@ -71,16 +71,19 @@ services:
 
   proxy:
     container_name: ci-infra-proxy
-    image: tivalii/nginx-proxy
+    image: nginx:1.12.2
     networks:
       - ci-infra-net
     ports:
       - "80:80"
+      - "443:443"
     volumes:
+      - ./tools/nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
       - ${VOLUME_PATH}/nginx/html:/usr/share/nginx/html:ro
+      - ${VOLUME_PATH}/nginx/ssl:/etc/nginx/ssl:ro
     environment:
-      SERVER_NAME: ${WEB_SERVER_NAME}
-      CLIENT_MAX_BODY_SIZE: 200m
+      SRV_NAME: ${WEB_SERVER_NAME}
+    command: /bin/bash -c "envsubst '$$SRV_NAME' < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf && cat /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     depends_on:
      - gerrit
      - jenkins
